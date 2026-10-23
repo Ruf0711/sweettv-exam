@@ -1,8 +1,38 @@
 # SWEET.TV exam — calibrated recommendation experiments and final predictions
 
-## Stage 3: designated first competition submission
+## Current final submission: Stage 4 LambdaRank v2
 
-The selected final method is **Personal History with Global Popularity fallback**.
+**Designated Kaggle file:** [`submission_ranker_v2.csv`](submission_ranker_v2.csv), consisting of 1,260 users with five distinct positive programme IDs per row. The original Kaggle submission returned **Public MAP@5 0.44579 / Private MAP@5 0.43212** (status: COMPLETE, 23 October 2026). These are the actual Kaggle scores; the validation numbers below are local proxy metrics, not hidden competition labels.
+
+This is the current final model. The Stage 3 History-v1 submission documented below is an **earlier baseline and first Kaggle submission**, not the final designated model.
+
+**Reproduce Stage 4 with the original course competition data in `data/` and preserved prior stage artifacts in `artifacts/`:**
+
+```powershell
+python -m pip install -r requirements.txt -r requirements-stage2.txt -r requirements-stage4.txt
+python -B -m tvrec_ltr test --config configs/stage4.json
+python -B -m tvrec_ltr run --config configs/stage4.json
+python -B -m tvrec_ltr verify --config configs/stage4.json
+```
+
+Stage 4 performs 250-place retrieval from History (quota 100), ALS (75), CBF (50), and Popularity (25), and reranks with **LightGBM LambdaRank** using 82 temporal/user/item/context features. The supervised ranker uses eleven historical pseudo-forecast windows and an inner chronology-based selection, then checks the held-out main and recent folds before training the final model only on earlier viewing evidence. Parameters are frozen in [`configs/stage4.json`](configs/stage4.json) (seed 42, 160 boosting rounds, 15 leaves, depth 5, learning rate 0.04).
+
+| Algorithm (local >80% continuous-completion relevance proxy) | Main MAP@5 | Recent MAP@5 |
+|---|---:|---:|
+| Popularity | 0.439197 | 0.250356 |
+| History v1 | 0.509021 | 0.361846 |
+| Implicit ALS | 0.370304 | 0.219481 |
+| Content-Based | 0.169928 | 0.107137 |
+| History/ALS fusion | 0.513351 | 0.356853 |
+| **LambdaRank v2** | **0.571899** | **0.391342** |
+
+The real v2 CSV file checksum SHA-256 is `d5139df2986e7ab109e12989ec08e7fc319c40f036e62bfbf5034c0f53811b7f`. It is committed as bytes without Git newline rewriting (see [`.gitattributes`](.gitattributes)). The original raw data, caches and model artifacts are intentionally excluded from public GitHub, so a clean checkout **cannot fully rerun** Stage 4 without those inputs/prior stages. The full native OpenCode session export is submitted separately to the course platform, not published.
+
+---
+
+## Archived Stage 3: first competition submission
+
+The selected Stage 3 first-submission method was **Personal History with Global Popularity fallback**.
 It reuses `tvrec.stage2.rankers.PersonalHistory` unchanged, with a **90-day
 half-life** and **0.25 duration coefficient**. Hyperparameters are frozen in
 `configs/final_history_v1.json` and checked against the completed Stage 2 model
