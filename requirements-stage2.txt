@@ -1,0 +1,5 @@
+# Install alongside the unchanged Stage 1 requirements. Python 3.10.11.
+scipy==1.10.1
+scikit-learn==1.2.1
+threadpoolctl==3.1.0
+implicit==0.7.2

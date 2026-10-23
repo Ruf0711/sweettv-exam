@@ -1,0 +1,6 @@
+# Reproduce with Python 3.10.11. Tests use the standard-library unittest runner.
+numpy==1.24.2
+pandas==1.5.3
+pyarrow==22.0.0
+tzdata==2024.1
+psutil==5.9.4

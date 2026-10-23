@@ -1,0 +1,21 @@
+{
+  "final_v1_config": "final_history_v1.json",
+  "artifacts_dir": "artifacts/history_v2",
+  "completion_thresholds_strict_percent": [30, 50, 80],
+  "mixture_weights": [[0.25, 0.5, 0.25], [0.1, 0.3, 0.6]],
+  "airing_exponents": [0.25, 0.5],
+  "history_parameters": {"half_life_days": 90.0, "duration_coefficient": 0.25},
+  "selection": "Choose the highest inner MAP@5; outer folds only accept or reject this frozen winner.",
+  "minimum_outer_gain_each": 0.005,
+  "bootstrap": {"seed": 42, "replicates": 2000, "lower_quantile": 0.025},
+  "submission_file": "submission_history_v2.csv",
+  "external_reference": {
+    "author": "Nikita Melentev",
+    "year": 2021,
+    "title": "Two-layered Recommender System Methodology: A Prize-Winning Solution",
+    "url": "https://medium.com/data-science/two-layered-recommender-system-methodology-a-prize-winning-solution-c4bdb815b156",
+    "accessible_url": "https://towardsdatascience.com/two-layered-recommender-system-methodology-a-prize-winning-solution-c4bdb815b156/",
+    "used_ideas": ["Count broadcasts watched more than 50% in one sitting", "Filter by known future availability", "Explore 30/50/80 percent counts and upcoming airing frequency"],
+    "disclosure": "Methodological inspiration only. No external solution code, models, or predictions obtained or copied. Third-party account is not official label-generation code."
+  }
+}

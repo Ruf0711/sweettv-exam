@@ -1,0 +1,18 @@
+{
+  "base_config": "default.json",
+  "stage2_config": "stage2.json",
+  "stage2_completion": "../artifacts/stage2/completion.json",
+  "method": "PersonalHistory",
+  "decision": "User-designated first competition submission; freeze the validated History algorithm and use Global Popularity fallback.",
+  "training_cutoff_local_exclusive": "2020-07-27 00:00:00",
+  "timezone": "Europe/Kyiv",
+  "training_feedback": "completion_ge50_broadcast_frequency_duration_recency",
+  "primary_evaluation_proxy": "completion_gt80",
+  "history": {"half_life_days": 90.0, "duration_coefficient": 0.25},
+  "candidate_schedule": "export_arh_31-42-final.csv",
+  "submission_file": "submission_history_v1.csv",
+  "artifacts_dir": "artifacts/final",
+  "k": 5,
+  "expected_users": 1260,
+  "example_user_ids": ["10246214960655461086", "8377619604347126107"]
+}

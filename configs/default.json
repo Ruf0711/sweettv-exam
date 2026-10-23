@@ -1,0 +1,73 @@
+{
+  "project_root": "..",
+  "data_dir": "data",
+  "artifacts_dir": "artifacts",
+  "sources": {
+    "viewing": "dataset11-30.csv",
+    "schedules": [
+      "export_arh_11-20-final.csv",
+      "export_arh_21-30-final.csv",
+      "export_arh_31-42-final.csv"
+    ],
+    "template": "submission.csv",
+    "archive": "sweettv-tv-program-recommender.zip"
+  },
+  "timezone": "Europe/Kyiv",
+  "timezone_assumption": "Evidence-based interpretation of naive source wall times, not a documented source fact. All audited elapsed durations agree after Europe/Kyiv localization.",
+  "seed": 42,
+  "preparation": {
+    "viewing_end_exclusive_local": "2020-07-27 00:00:00",
+    "competing_broadcast_policy": "equal_distinct_labels_including_unknown",
+    "viewing_normalization": "deduplicate_then_union_same_user_channel_including_contact",
+    "missing_programme_id_policy": "unknown_zero",
+    "nonpositive_interval_policy": "exclude",
+    "require_elapsed_duration_agreement": true,
+    "csv_chunk_rows": 250000,
+    "join_chunk_rows": 100000,
+    "parquet_batch_rows": 131072,
+    "progress_every_rows": 500000
+  },
+  "interactions": {
+    "relevance_seconds": 60.0,
+    "confidence_seconds_cap": null
+  },
+  "popularity": {
+    "lookback_days": null,
+    "support_min_seconds": 0.0,
+    "tie_break": "programme_id_ascending"
+  },
+  "evaluation": {
+    "k": 5,
+    "expected_cohort_size": 1260,
+    "allow_repeats_from_history": true,
+    "empty_relevance_ap": 0.0,
+    "example_user_ids": ["10246214960655461086", "8377619604347126107"]
+  },
+  "folds": {
+    "main": {
+      "train_start_local": null,
+      "cutoff_local": "2020-05-18 00:00:00",
+      "validation_end_local": "2020-07-27 00:00:00",
+      "candidate_policy": {"kind": "file", "file": "export_arh_21-30-final.csv"}
+    },
+    "recent_a": {
+      "train_start_local": null,
+      "cutoff_local": "2020-06-29 00:00:00",
+      "validation_end_local": "2020-07-13 00:00:00",
+      "candidate_policy": {"kind": "window_overlap"}
+    },
+    "recent_b": {
+      "train_start_local": null,
+      "cutoff_local": "2020-07-13 00:00:00",
+      "validation_end_local": "2020-07-27 00:00:00",
+      "candidate_policy": {"kind": "window_overlap"}
+    },
+    "twelve_week_stress": {
+      "train_start_local": null,
+      "cutoff_local": "2020-05-04 00:00:00",
+      "validation_end_local": "2020-07-27 00:00:00",
+      "candidate_policy": {"kind": "window_overlap"}
+    }
+  },
+  "final_candidate_policy": {"kind": "file", "file": "export_arh_31-42-final.csv"}
+}

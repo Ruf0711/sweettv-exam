@@ -1,0 +1,36 @@
+{
+  "final_v1_config": "final_history_v1.json",
+  "artifacts_dir": "artifacts/stage4",
+  "seed": 42,
+  "threads": 4,
+  "retrieval_quotas": {"history": 100, "als": 75, "cbf": 50, "popularity": 25},
+  "training_users": "Exact template cohort; retrieval models fit on all available historical users.",
+  "pseudo_forecasts": [
+    {"name": "p0323", "cutoff": "2020-03-23 00:00:00", "end": "2020-04-06 00:00:00"},
+    {"name": "p0406", "cutoff": "2020-04-06 00:00:00", "end": "2020-04-20 00:00:00"},
+    {"name": "p0420", "cutoff": "2020-04-20 00:00:00", "end": "2020-05-04 00:00:00"},
+    {"name": "p0504", "cutoff": "2020-05-04 00:00:00", "end": "2020-05-18 00:00:00"},
+    {"name": "long0323", "cutoff": "2020-03-23 00:00:00", "end": "2020-05-18 00:00:00"},
+    {"name": "long0406", "cutoff": "2020-04-06 00:00:00", "end": "2020-05-18 00:00:00"},
+    {"name": "p0518", "cutoff": "2020-05-18 00:00:00", "end": "2020-06-01 00:00:00"},
+    {"name": "p0601", "cutoff": "2020-06-01 00:00:00", "end": "2020-06-15 00:00:00"},
+    {"name": "p0615", "cutoff": "2020-06-15 00:00:00", "end": "2020-06-29 00:00:00"},
+    {"name": "p0629", "cutoff": "2020-06-29 00:00:00", "end": "2020-07-13 00:00:00"},
+    {"name": "p0713", "cutoff": "2020-07-13 00:00:00", "end": "2020-07-27 00:00:00"}
+  ],
+  "inner": {"name": "inner", "cutoff": "2020-04-20 00:00:00", "end": "2020-05-18 00:00:00"},
+  "models": ["binary_history", "binary_context", "binary_full", "lambda_full"],
+  "boosting_rounds": 160,
+  "lightgbm": {"learning_rate": 0.04, "num_leaves": 15, "max_depth": 5, "min_data_in_leaf": 150, "lambda_l1": 1.0, "lambda_l2": 15.0, "feature_fraction": 1.0, "bagging_fraction": 1.0, "max_bin": 127, "min_gain_to_split": 0.01},
+  "history_rank_blends": [0.0, 0.25, 0.5],
+  "bootstrap": {"seed": 42, "replicates": 2000},
+  "minimum_gain_each_outer": 0.005,
+  "submission_file": "submission_ranker_v2.csv",
+  "external_reference": {
+    "author": "Nikita Melentev", "year": 2021,
+    "title": "Two-layered Recommender System Methodology: A Prize-Winning Solution",
+    "url": "https://medium.com/data-science/two-layered-recommender-system-methodology-a-prize-winning-solution-c4bdb815b156",
+    "accessible_url": "https://towardsdatascience.com/two-layered-recommender-system-methodology-a-prize-winning-solution-c4bdb815b156/",
+    "disclosure": "Methodological inspiration for two-stage retrieval, completion-count and schedule features, and binary LightGBM reranking. Locally developed implementation; no external solution code, models or predictions copied. Third-party completion rule is not verified official hidden evaluation code."
+  }
+}

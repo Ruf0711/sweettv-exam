@@ -1,0 +1,48 @@
+{
+  "base_config": "default.json",
+  "stage1_run_manifest": "../artifacts/runs/stage1-main-6a192d8d3c89-20261022T121623806703Z/run_manifest.json",
+  "artifacts_subdir": "artifacts/stage2",
+  "seed": 42,
+  "threads": 1,
+  "primary_relevance": "completion_gt80",
+  "relevance_rules": ["cumulative_ge60", "completion_ge50", "completion_gt80"],
+  "source_evidence": {
+    "url": "https://medium.com/data-science/two-layered-recommender-system-methodology-a-prize-winning-solution-c4bdb815b156",
+    "accessible_url": "https://towardsdatascience.com/two-layered-recommender-system-methodology-a-prize-winning-solution-c4bdb815b156/",
+    "author": "Nikita Melentev",
+    "published": "2021-03-20",
+    "reported_rule": "TV-program was considered watched if the user watched over 80% of it and did not change the channel.",
+    "status": "Third-party account; official hidden evaluation code has not been verified. No external solution code, models, or predictions are used."
+  },
+  "completion": {
+    "channel_switch_policy": "truncate_previous_run_at_next_different_channel_start_without_resuming",
+    "simultaneous_different_channel_starts": "unknown_break",
+    "broadcast_conflict_policy": "exclude_ambiguous_seconds",
+    "denominator": "full_utc_broadcast_duration_even_at_window_boundaries",
+    "repeated_broadcasts": "distinct_instances; any_single_sitting_may_qualify; count_each_user_broadcast_once",
+    "event_chunk_rows": 100000
+  },
+  "folds": {
+    "tuning": {
+      "cutoff_local": "2020-04-20 00:00:00",
+      "validation_end_local": "2020-05-18 00:00:00",
+      "candidate_policy": {"kind": "window_overlap"}
+    },
+    "main": {
+      "cutoff_local": "2020-05-18 00:00:00",
+      "validation_end_local": "2020-07-27 00:00:00",
+      "candidate_policy": {"kind": "file", "file": "export_arh_21-30-final.csv"}
+    },
+    "recent_b": {
+      "cutoff_local": "2020-07-13 00:00:00",
+      "validation_end_local": "2020-07-27 00:00:00",
+      "candidate_policy": {"kind": "window_overlap"}
+    }
+  },
+  "training_feedback": "completion_ge50_broadcast_frequency_duration_recency",
+  "history": {"half_life_days": 90.0, "duration_coefficient": 0.25},
+  "als_grid": {"factors": [32, 64], "regularization": [0.05, 0.2], "confidence_scale": [5.0, 20.0], "iterations": 20},
+  "content": {"title_max_features": 30000, "title_weight": 0.4, "metadata_weight": 1.0},
+  "hybrid": {"rrf_constant": 60.0, "history_weights": [0.5, 0.75], "minimum_tuning_gain": 0.0001},
+  "example_user_ids": ["10246214960655461086", "8377619604347126107"]
+}
